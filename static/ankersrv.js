@@ -335,17 +335,27 @@ $(function () {
             if (data.commandType == 1001) {
                 // Returns Print Details
                 $("#print-name").text(data.name);
-                $("#time-elapsed").text(getTime(data.totalTime));
-                $("#time-remain").text(getTime(data.time));
+                const totalTime = getTime(data.totalTime);
+                if (!isNaN(totalTime)) {
+                    $("#time-elapsed").text(totalTime);
+                }
+                const time = getTime(data.time);
+                if (!isNaN(time)) {
+                    $("#time-remain").text(time);
+                }
                 const progress = getPercentage(data.progress);
-                $("#progressbar").attr("aria-valuenow", progress);
-                $("#progressbar").attr("style", `width: ${progress}%`);
-                $("#progress").text(`${progress}%`);
+                if (!isNaN(progress)) {
+                    $("#progressbar").attr("aria-valuenow", progress);
+                    $("#progressbar").attr("style", `width: ${progress}%`);
+                    $("#progress").text(`${progress}%`);
+                }
             } else if (data.commandType == 1003) {
                 // Returns Nozzle Temp
                 const current = getTemp(data.currentTemp);
                 const target = getTemp(data.targetTemp);
-                $("#nozzle-temp").text(`${current}°C`);
+                if (!isNaN(current)) {
+                    $("#nozzle-temp").text(`${current}°C`);
+                }
                 if (!isNaN(target)) {
                     $("#set-nozzle-temp").attr("value", `${target}°C`);
                 }
@@ -353,7 +363,9 @@ $(function () {
                 // Returns Bed Temp
                 const current = getTemp(data.currentTemp);
                 const target = getTemp(data.targetTemp);
-                $("#bed-temp").text(`${current}°C`);
+                if (!isNaN(current)) {
+                    $("#bed-temp").text(`${current}°C`);
+                }
                 if (!isNaN(target)) {
                     $("#set-bed-temp").attr("value", `${target}°C`);
                 }
